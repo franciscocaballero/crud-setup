@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { legacy_createStore as createStore } from "redux";
 import { applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
 
 import reducers from "./reducers";
 
