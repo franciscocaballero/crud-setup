@@ -2,13 +2,13 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-
+import dotenv from "dotenv";
 import postRoutes from "./routes/posts.js";
 
 const app = express();
-
-const CONNECTION_URL =
-  "mongodb+srv://ciscocaballero:Cisco1122$@cluster0.cpq8nmo.mongodb.net/?retryWrites=true&w=majority";
+dotenv.config();
+// const CONNECTION_URL =
+//   "mongodb+srv://ciscocaballero:Cisco1122$@cluster0.cpq8nmo.mongodb.net/?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: "30mb", extend: true }));
@@ -19,7 +19,7 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 mongoose
-  .connect(CONNECTION_URL)
+  .connect(process.env.CONNECTION_URL)
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
