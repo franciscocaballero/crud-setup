@@ -47,12 +47,32 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;
-  // const { title } = req.params;
   console.log(res);
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No post with that Id");
 
   await PostMessage.findByIdAndRemove(id);
+  //remove  post that matches id
   console.log("Delete");
   res.json({ message: "Post deleted succesfully!" });
+};
+
+export const likePost = async (req, res) => {
+  // getting Post ID From front end
+  const { id } = req.params;
+  // verfing that ID id valid
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No post with that ID");
+  //find post we are look for to update
+  const post = await PostMessage.findById(id);
+  // updated post
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    id,
+    {
+      likeCount: post.likeCount + 1,
+    },
+    { new: true }
+  );
+  //sends a JSON response sends a response (with the correct content-type) that is the parameter converted to a JSON string using the JSON.stringify() method.
+  res.json(updatedPost);
 };
