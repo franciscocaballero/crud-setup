@@ -14,12 +14,12 @@ const Form = ({ currentId, setCurrentId }) => {
     tags: "",
     selectedFiles: "",
   });
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
   );
-  const classes = useStyles();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (post) setPostData(post);
